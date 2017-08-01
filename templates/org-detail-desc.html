@@ -1,0 +1,12 @@
+{% extends 'org-base.html' %}
+{% load staticfiles %}
+{% block custom_title %}大学简介 - 名校在线网{% endblock %}
+{% block page_path %}<a>大学简介</a>{% endblock %}
+{% block right_form %}
+<div class="right companycenter layout">
+  <div class="head">
+    <h1>机构介绍</h1>
+  </div>
+  <p class="des">{{ course_org.desc }}</p>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'org_list_base.html' %}
+{% load staticfiles %}
+{% block  title %}机构列表页 - 名校在线网{% endblock %}
+{% block custom_bread %}
+    <div class="breadcrumb flat">
+	<a href="{% url 'index' %}">首页</a>
+	<a href="#" class="active">机构列表页</a>
+    </div>
+{% endblock %}
+
+{% block city %}
+    <a href="?ct={{ category }}"><span {% ifequal city_id '' %}class="active2"{% endifequal %}>全部</span></a>
+    {% for city in all_cities %}
+    <a href="?city={{ city.id }}&ct={{ category }}"><span {% ifequal city_id city.id|stringformat:'i' %} class="active2" {% endifequal %} >{{ city.name }}</span></a>
+    {% endfor %}
+{% endblock %}
+
+{% block org %}
+    {% for org in all_orgs.object_list %}
+        <dl class="des difdes">
+                    <dt>
+                        <a href="{% url 'org:org_home' org.id %}">
+{#                            <img width="200" height="120" class="scrollLoading" data-url="{% static 'media/org/2016/11/nit.jpg' %}"/>#}
+                            <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ org.image }}"/>
+                        </a>
+                    </dt>
+                    <dd>
+
+                        <div class="clearfix">
+                                 <h1>{{ org.name }}</h1>
+                                 <div class="pic fl">
+                                         <img src="{% static 'images/authentication.png' %}"/>
+                                         <img src="{% static 'images/gold.png' %}"/>
+                                 </div>
+                        </div>
+
+                        <ul class="cont">
+                            <li class="first"><p class="pic9">课程数：<span>{{ org.courses_nums }}</span></p><p class="c7">学习人数：<span>{{ org.students }}</span></p></li>
+                            <li class="c8" style="padding-left:18px;">{{ org.city }}</li>
+                            <li class="pic10" style="padding-left:18px;">描述：{{ org.desc }}</li>
+
+                        </ul>
+                    </dd>
+                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
+                </dl>
+    {% endfor %}
+{% endblock %}
+
+{% block rank %}
+		<div class="right companyrank layout">
+			<div class="head">火热大学TOP3</div>
+            {% for hot in hot3 %}
+                <dl class="des">
+                    <dt class="num fl">{{ forloop.counter }}</dt>
+                    <dd>
+                        <a href="{% url 'org:org_home' hot.id %}"><h1>{{ hot.name }}</h1></a>
+                        <p>{{ hot.address }}</p>
+                    </dd>
+                </dl>
+            {% endfor %}
+        </div>
+{% endblock %}
+
+{% block order_by %}
+<li {% ifequal sort '' %}class="active"{% endifequal %}><a href="?&city={{ city_id }}&ct={{ category }}">全部</a> </li>
+<li {% ifequal sort 'students' %}class="active"{% endifequal %} ><a href="?sort=students&city={{ city_id }}&ct={{ category }}">学习人数 &#8595;</a></li>
+<li {% ifequal sort 'coursenums' %}class="active"{% endifequal %} ><a href="?sort=courses&city={{ city_id }}&ct={{ category }}">课程数 &#8595;</a></li>
+{% endblock %}
+
+{% block org_cnt %}<div class="all">共<span class="key">{{ cnt }}</span>所大学</div>{% endblock %}

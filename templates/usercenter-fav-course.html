@@ -1,0 +1,65 @@
+{% extends 'usercenter-info.html' %}
+{% load staticfiles %}
+{% block title %}我的收藏 - 名校在线网{% endblock %}
+
+{% block page_path %}
+    <a>我的收藏</a>
+{% endblock %}
+
+{% block left_content %}
+	<div class="left">
+        <ul>
+            <li ><a href="{% url 'user:info_center' %}">个人资料</a></li>
+            <li ><a href="{% url 'user:my_course' %}">我的课程</a></li>
+            <li class="active2">我的收藏</li>
+            <li >
+                <a href="{% url 'user:my_message' %}" style="position: relative;">
+                    我的消息
+                </a>
+            </li>
+        </ul>
+	</div>
+{% endblock %}
+
+{% block right_content %}
+<div class="right" >
+            <div class="personal_des Releasecont">
+                <div class="head">
+                    <h1>我的收藏</h1>
+                </div>
+            </div>
+            <div class="personal_des permessage">
+                <div class="head">
+                    <ul class="tab_header messagehead">
+                        <li><a href="{% url 'user:my_fav_org' %}">大学</a> </li>
+                        <li><a href="{% url 'user:my_fav_teacher' %}">授课教师 </a></li>
+                        <li class="active">公开课程</li>
+                    </ul>
+
+                </div>
+                <div class="companycenter">
+                    <div class="group_list brief">
+                        {% for course in fav_courses %}
+                        <div class="module1_5 box">
+                            <a href="course-detail.html">
+                                <img width="214" height="190" src="{{ MEDIA_URL }}{{ course.image }}"/>
+                            </a>
+                            <div class="des">
+                                <a href="course-detail.html"><h2>{{ course.name }}</h2></a>
+                                <span class="fl">时长：<i class="key">{{ course.learn_time }}</i></span>
+                                <span class="fr">学习人数：{{ course.students }}</span>
+                            </div>
+                            <div class="bottom">
+                                <span class="fl">{{ course.course_org }}</span>
+                                <span class="delete-group fr jsDeleteFav_course" data-favid="{{ course.id }}"></span>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
