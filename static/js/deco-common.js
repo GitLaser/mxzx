@@ -357,11 +357,6 @@ $(function() {
 	$('.sidebar .share').hover(function(){
 		$('.sidebar .bdsharebuttonbox').stop(true).fadeToggle();
 	});
-	//返回顶部
-	$('.totop').click(function(){
-		$('html,body').animate({scrollTop:0},100);
-		return false;
-	});
 
     //顶部个人中心下拉框
     $('.header .personal').hover(function(){

@@ -3,12 +3,16 @@
 {% block  title %}公开课视频 - 名校在线网{% endblock %}
 
 {% block custom_bread %}
-<div class="breadcrumb flat">
-	<a href="{% url 'index' %}">首页</a>
-	<a href="{% url 'org:teacher_list' %}">公开课</a>
-	<a href="{% url 'course:course_detail' this_course.id %}">课程详情</a>
-    <a href="#" class="active">课程视频</a>
-</div>
+<section>
+    <div class="wp">
+        <ul  class="crumbs">
+            <li><a href="{% url 'index' %}">首页</a>></li>
+            <li><a href="{% url 'course:course_list' %}">课程列表</a>></li>
+            <li><a href="{% url 'course:course_detail' this_course.id %}">课程详情</a>></li>
+            <li>课程学习</li>
+        </ul>
+    </div>
+</section>
 {% endblock %}
 
 {% block content %}

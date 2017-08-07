@@ -21,12 +21,12 @@ from organization.models import Org,Teacher
 from operation.models import UserCourse,UserFavorite,UserMessage
 
 
-
+# 重写 authenticated 认证
 class CustomBackend(ModelBackend):
     def authenticate(self, username=None, password=None, **kwargs):
         try:
+            # 为了可以用邮箱名注册，我们这样：
             user = UserProfile.objects.get(Q(username=username)|Q(email=username),)
-            #以便可以用邮箱名注册
             if user.check_password(password) :
                 return user
         except Exception as e:
@@ -70,7 +70,7 @@ class LogOutView(View):
 
 
 def register_view(request):
-    #用户注册
+    # 用户注册
     if request.POST:
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
@@ -101,7 +101,7 @@ def register_view(request):
 
 
 class ActivateUserView(View):
-    #激活用户
+    # 激活用户
     def get(self,request,activate_code):
         all_records = EmailVerifyRecord.objects.filter(code=activate_code)
         if all_records:
@@ -116,7 +116,7 @@ class ActivateUserView(View):
 
 
 class ForgetPwdView(View):
-    #点击登录页面的忘记密码，执行此处
+    # 点击登录页面的忘记密码，执行此处
     def get(self,request):
         return render(request,'forget_pwd.html')
 
@@ -138,8 +138,9 @@ class RedirectToResetView(View):
     def get(self, request,activate_code):
         record = EmailVerifyRecord.objects.get(code=activate_code)
         email = record.email
-        #将邮箱号传到重置页面，以便设置的时候知道是哪个用户
+        # 将邮箱号传到重置页面，以便设置的时候知道是哪个用户
         return render(request,'password_reset.html',{'email':email})
+
 
 class ResetPwdView(View):
     def post(self, request):
@@ -183,8 +184,6 @@ def server_error_500(request):
     response = render_to_response('500.html')
     response.status_code = 500
     return response
-
-
 
 
 class UploadImageView(LoginRequiredMixIn, View):

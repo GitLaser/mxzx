@@ -17,11 +17,13 @@ class OrgView(View):
     def get(self,request):
         all_cities = set(CityDict.objects.filter(org__isnull=False))
         all_orgs = Org.objects.all()
+
         # 搜索功能
         search_keywords = request.GET.get('keywords', '')
         if search_keywords:
             all_orgs = all_orgs.filter(
                 Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
+
         # 选出火热课程TOP3
         hot3 = all_orgs.order_by('-click_nums')[:3]
 
@@ -37,7 +39,9 @@ class OrgView(View):
                 all_orgs = all_orgs.order_by('-students')
             elif sort == 'courses_nums':
                 all_orgs = all_orgs.order_by('-courses_nums')
-        cnt = len(all_orgs)     # 符合要求的机构数量
+
+        # 符合要求的机构数量
+        cnt = len(all_orgs)
 
         # 对课程机构分页的操作
         try:
@@ -76,6 +80,7 @@ class OrgHomeView(View):
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
                 has_fav = True
 
+        # 指定当前页面名
         current_page = 'home'
 
         return render(request, 'org-detail-homepage.html', {
@@ -91,7 +96,6 @@ class OrgHomeView(View):
 # 课程机构详情页讲师页面
 class OrgCourseView(View):
     def get(self, request, org_id):
-        current_page = 'course'
         course_org = Org.objects.get(id=int(org_id))
         all_courses = course_org.course_set.all()
 
@@ -111,6 +115,9 @@ class OrgCourseView(View):
 
         courses = p.page(page)
 
+        # 指定当前页面名
+        current_page = 'course'
+
         return render(request, 'org-detail-course.html', {
             'all_courses': courses,
             'course_org': course_org,
@@ -122,7 +129,6 @@ class OrgCourseView(View):
 class OrgDescView(View):
     # 大学简介页面
     def get(self, request, org_id):
-        current_page = 'desc'
         course_org = Org.objects.get(id=int(org_id))
 
         # 初始化判断是否收藏
@@ -130,6 +136,9 @@ class OrgDescView(View):
         if request.user.is_authenticated():
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
                 has_fav = True
+
+        # 指定当前页面名
+        current_page = 'desc'
 
         return render(request, 'org-detail-desc.html', {
             'course_org': course_org,
@@ -160,7 +169,6 @@ class OrgTeacherView(View):
 
 
 class AddFavView(View):
-
     # 用户收藏、取消收藏 课程机构
     def set_fav_nums(self, fav_type, fav_id, num=1):
         if fav_type == 1:
@@ -210,6 +218,7 @@ class AddFavView(View):
         return HttpResponse(json.dumps(res), content_type='application/json')
 
 
+# 教师列表页
 class TeacherListView(View):
     def get(self,request):
         all_teachers = Teacher.objects.all()
@@ -232,25 +241,24 @@ class TeacherListView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_teachers, 5, request=request)
+        p = Paginator(all_teachers, 3, request=request)
 
         teachers = p.page(page)
-
-        return render(request,'teachers-list.html',{'all_teachers': teachers,'hot3': hot3})
+        teachers_num = all_teachers.count()
+        return render(request,'teachers-list.html',{'all_teachers': teachers,'hot3': hot3,'teachers_num':teachers_num})
 
 
 # 讲师详情
 class TeacherDetailView(View):
     def get(self, request, teacher_id):
         sorted_teacher = Teacher.objects.all().order_by('-click_nums')[:3]
-
         teacher = Teacher.objects.get(id=int(teacher_id))
         teacher.click_nums += 1
         teacher.save()
         all_courses = Course.objects.filter(course_teacher=teacher)
 
         has_teacher_faved = False
-        # 注意这里有个坑就是 teacher_id 是字符串，teacher.id 是数字
+        # 注意： teacher_id 是字符串，teacher.id 是数字
         if UserFavorite.objects.filter(user=request.user, fav_type=3, fav_id=teacher.id):
             has_teacher_faved = True
 

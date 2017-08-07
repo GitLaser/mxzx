@@ -1,9 +1,9 @@
 #-*- coding:utf-8 -*-
 __author__ = 'chenziang'
 __date__ = '2017/4/23 14:55'
-
 import xadmin
-from .models import CityDict,Org,Teacher
+
+from .models import CityDict, Org, Teacher
 
 
 # 城市

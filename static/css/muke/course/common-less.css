@@ -2,7 +2,7 @@
 html,
 body {
     min-width: 800px;
-    background-color: white;
+    background-color: ghostwhite;
 }
 i {
     font-style: normal;
@@ -51,8 +51,8 @@ i {
 .course-infos .w {
     height: 156px;
     z-index: 1;
-    background-color: #504d3b;
-    margin-top: 20px;
+    background-color: darkslategrey;
+    margin-top: 0px;
 }
 .course-infos .path {
     line-height: 48px;

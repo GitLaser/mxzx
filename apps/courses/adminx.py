@@ -4,14 +4,17 @@ __date__ = '2017/4/23 14:19'
 
 import xadmin
 from .models import Course,CourseSource,Video,Lesson,BannerCourse
-from organization.models import Org
+
 
 class LessonInLine(object):
     model = Lesson
     extra = 0
+
+
 class CourseSourceInLine(object):
     model = CourseSource
     extra = 0
+
 
 class CourseAdmin(object):
     list_display = ['name','course_org','desc','detail','degree','is_banner','learn_time','students','fav_nums','click_nums']

@@ -3,14 +3,13 @@
 {% load staticfiles %}
 
 {% block custom_bread %}
-    <section>
-        <div class="breadcrumb flat">
-
-                <a href="{% url 'index' %}">首页</a>
-                <a href="{% url 'course:course_list' %}">公开课程</a>
-                <a>课程详情</a>
-
-
+        <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li><a href="{% url 'course:course_list' %}">课程列表</a>></li>
+                <li>课程详情</li>
+            </ul>
         </div>
     </section>
 {% endblock %}
@@ -58,7 +57,7 @@
         </div>
         <div class="right">
           <div class="head">
-            <h1>授课机构</h1>
+            <h1>授课名校</h1>
             <p>世界名校，课程权威</p>
           </div>
           <div class="pic">

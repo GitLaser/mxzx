@@ -22,10 +22,12 @@ class Course(models.Model):
     click_nums = models.IntegerField(default=0,verbose_name=u'点击数')
     add_time = models.DateTimeField(default=datetime.now,verbose_name=u'添加时间')
     is_banner = models.BooleanField(default=False,verbose_name=u'是否首页轮播')
+
     class Meta:
         verbose_name = u'课程'
         verbose_name_plural = verbose_name
         ordering = ['-add_time']
+
     def __unicode__(self):
         return self.name
 
@@ -38,6 +40,7 @@ class Course(models.Model):
 
     def get_all_sourses(self):
         return self.coursesource_set.all()
+
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course,verbose_name=u'课程')

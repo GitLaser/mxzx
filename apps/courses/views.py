@@ -22,7 +22,7 @@ class CourseListView(View):
         if search_keywords:
             all_courses = all_courses.filter(Q(name__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
 
-        #按学生人数/点击量排名
+        # 按学生人数/点击量排名
         sort = request.GET.get('sort', '')
         if sort:
             if sort == 'students':
@@ -30,8 +30,7 @@ class CourseListView(View):
             elif sort == 'hot':
                 all_courses= all_courses.order_by('-click_nums')
 
-
-        #对课程列表做分页
+        # 对课程列表做分页
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
@@ -65,7 +64,7 @@ class CourseDetailView(View):
             recommend_course = Course.objects.get(pk=randint(1, max_num))
 
         has_course_faved = False
-        # 注意这里有个坑: teacher_id 是字符串，teacher.id 是数字
+        # 注意: teacher_id 是字符串，teacher.id 是数字
         if UserFavorite.objects.filter(user=request.user, fav_type=1, fav_id=course.id):
             has_course_faved = True
 
@@ -138,12 +137,12 @@ class CourseVideoView(LoginRequiredMixIn,View):
         # 课程资源
         all_resources = CourseSource.objects.filter(course_id=this_course.id)
 
-        # [学过这门课的同学还学过]~
+        # 学过这门课的同学还学过的其他课
         # 所有含有‘course’的UserCourse的类对象
         user_courses = UserCourse.objects.filter(course=this_course.id)
+
         # 所有学过‘course’这门课的用户的id
         user_ids = [user_course.user.id for user_course in user_courses]
-        # 如果有人学过这门课
 
         # 学过这门课的同学，还学过以下其他的课，选取第一个，作为推荐课程
         recommend_courses = UserCourse.objects.filter(user_id__in=user_ids).exclude(course_id=this_course.id)
@@ -162,9 +161,7 @@ class CourseVideoView(LoginRequiredMixIn,View):
 
 
 class AddCommentView(View):
-    """
-    用户添加评论
-    """
+    # 用户评论
     def post(self,request):
         # 判断用户登录状态
         if not request.user.is_authenticated():
@@ -196,12 +193,12 @@ class VideoPlayView(View):
         # 课程的老师
         course_teacher = this_course.course_teacher
 
-        # [学过这门课的同学还学过]~
+        # 学过这门课的同学还学过的其他课
         # 所有含有‘course’的UserCourse的类对象
         user_courses = UserCourse.objects.filter(course=this_course.id)
+
         # 所有学过‘course’这门课的用户的id
         user_ids = [user_course.user.id for user_course in user_courses]
-        # 如果有人学过这门课
 
         # 学过这门课的同学，还学过以下其他的课，选取第一个，作为推荐课程
         recommend_courses = UserCourse.objects.filter(user_id__in=user_ids).exclude(course_id=this_course.id)

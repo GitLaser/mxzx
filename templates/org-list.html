@@ -1,11 +1,15 @@
 {% extends 'org_list_base.html' %}
 {% load staticfiles %}
-{% block  title %}机构列表页 - 名校在线网{% endblock %}
+{% block  title %}机构列表 - 名校在线网{% endblock %}
 {% block custom_bread %}
-    <div class="breadcrumb flat">
-	<a href="{% url 'index' %}">首页</a>
-	<a href="#" class="active">机构列表页</a>
+<section>
+    <div class="wp">
+        <ul  class="crumbs">
+            <li><a href="{% url 'index' %}">首页</a>></li>
+            <li>名校列表</li>
+        </ul>
     </div>
+</section>
 {% endblock %}
 
 {% block city %}
@@ -41,7 +45,6 @@
 
                         </ul>
                     </dd>
-                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
                 </dl>
     {% endfor %}
 {% endblock %}

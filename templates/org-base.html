@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <title>{% block custom_title %}机构首页 - 名校在线网{% endblock %}</title>
+  <title>{% block custom_title %}名校首页 - 名校在线网{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/reset.css' %}">
   <link rel="stylesheet" href="{% static 'css/animate.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -91,17 +91,15 @@
 
 
 {#面包屑（导航）#}
-
-    <section>
-        <div class="breadcrumb flat">
-
-                <a href="{% url 'index' %}">首页</a>
-                <a href="{% url 'course:course_list' %}">公开课程</a>
-                {% block page_path %}
-                {% endblock %}
-
-        </div>
-    </section>
+<section>
+    <div class="wp">
+        <ul  class="crumbs">
+            <li><a href="{% url 'index' %}">首页</a>></li>
+            <li><a href="{% url 'org:org_list' %}">名校列表</a>></li>
+            <li>{{ course_org.name }}</li>
+        </ul>
+    </div>
+</section>
 
 
 
@@ -109,10 +107,10 @@
   <div class="wp list personal_list comp">
     <div class="left">
       <ul>
-        <li class="{% ifequal current_page 'home' %}active2{% endifequal %}"><a href="{% url 'org:org_home' course_org.id %}">机构首页</a></li>
-        <li class="{% ifequal current_page 'course' %}active2{% endifequal %}"><a href="{% url 'org:org_course' course_org.id %}">机构课程</a></li>
-        <li class="{% ifequal current_page 'desc' %}active2{% endifequal %}"><a href="{% url 'org:org_desc' course_org.id %}">机构介绍</a></li>
-        <li class="{% ifequal current_page 'teacher' %}active2{% endifequal %}"><a href="{% url 'org:org_teacher' course_org.id %}">机构讲师</a></li>
+        <li class="{% ifequal current_page 'home' %}active2{% endifequal %}"><a href="{% url 'org:org_home' course_org.id %}">名校首页</a></li>
+        <li class="{% ifequal current_page 'course' %}active2{% endifequal %}"><a href="{% url 'org:org_course' course_org.id %}">名校课程</a></li>
+        <li class="{% ifequal current_page 'desc' %}active2{% endifequal %}"><a href="{% url 'org:org_desc' course_org.id %}">名校介绍</a></li>
+        <li class="{% ifequal current_page 'teacher' %}active2{% endifequal %}"><a href="{% url 'org:org_teacher' course_org.id %}">名校讲师</a></li>
       </ul>
     </div>
 
@@ -122,13 +120,6 @@
 
   </div>
 </section>
-<!--sidebar start-->
-<section>
-  <ul class="sidebar">
-    <li class="totop"></li>
-  </ul>
-</section>
-<!--sidebar end-->
 <!--header start-->
 <!--弹出省省市-->
 <script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
@@ -168,7 +159,7 @@
   }
 
   $('.collectionbtn').on('click', function () {
-    // this, fav_id,  fav_type (课程机构对应的 fav_type 是 2)
+    // this, fav_id,  fav_type (课程名校对应的 fav_type 是 2)
     add_fav($(this), {{ course_org.id }}, 2);
   });
 
