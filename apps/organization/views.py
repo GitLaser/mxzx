@@ -209,7 +209,6 @@ class AddFavView(View):
                 user_fav.fav_type = fav_type
                 user_fav.save()
                 self.set_fav_nums(fav_type, fav_id, 1)
-
                 res['status'] = 'success'
                 res['msg'] = '已收藏'
             else:
@@ -240,9 +239,7 @@ class TeacherListView(View):
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
             page = 1
-
         p = Paginator(all_teachers, 3, request=request)
-
         teachers = p.page(page)
         teachers_num = all_teachers.count()
         return render(request,'teachers-list.html',{'all_teachers': teachers,'hot3': hot3,'teachers_num':teachers_num})
@@ -257,14 +254,15 @@ class TeacherDetailView(View):
         teacher.save()
         all_courses = Course.objects.filter(course_teacher=teacher)
 
+        # 收藏判断，没登录就显示未收藏，没登录点击收藏就转到登录页面
         has_teacher_faved = False
-        # 注意： teacher_id 是字符串，teacher.id 是数字
-        if UserFavorite.objects.filter(user=request.user, fav_type=3, fav_id=teacher.id):
-            has_teacher_faved = True
-
         has_org_faved = False
-        if UserFavorite.objects.filter(user=request.user, fav_type=2, fav_id=teacher.org.id):
-            has_org_faved = True
+        if request.user.is_authenticated():
+            # 注意： teacher_id 是字符串，teacher.id 是数字
+            if UserFavorite.objects.filter(user=request.user, fav_type=3, fav_id=teacher.id):
+                has_teacher_faved = True
+            if UserFavorite.objects.filter(user=request.user, fav_type=2, fav_id=teacher.org.id):
+                has_org_faved = True
 
         return render(request, 'teacher-detail.html', {
             'teacher': teacher,

@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-"""MXZX URL Configuration
+"""mxzx URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
@@ -22,7 +22,7 @@ from users.views import LoginView,register_view,ActivateUserView,ForgetPwdView,R
     ResetPwdView,IndexView,LogOutView
 
 from django.views.static import serve
-from MXZX.settings import MEDIA_ROOT
+from mxzx.settings import MEDIA_ROOT
 
 
 urlpatterns = [

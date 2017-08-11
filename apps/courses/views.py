@@ -63,14 +63,15 @@ class CourseDetailView(View):
             max_num = Course.objects.count()
             recommend_course = Course.objects.get(pk=randint(1, max_num))
 
+        # 收藏判断，没登录就显示未收藏，没登录点击收藏就转到登录页面
+        has_org_faved = False
         has_course_faved = False
         # 注意: teacher_id 是字符串，teacher.id 是数字
-        if UserFavorite.objects.filter(user=request.user, fav_type=1, fav_id=course.id):
-            has_course_faved = True
-
-        has_org_faved = False
-        if UserFavorite.objects.filter(user=request.user, fav_type=2, fav_id=course.course_org.id):
-            has_org_faved = True
+        if request.user.is_authenticated():
+            if UserFavorite.objects.filter(user=request.user, fav_type=1, fav_id=course.id):
+                has_course_faved = True
+            if UserFavorite.objects.filter(user=request.user, fav_type=2, fav_id=course.course_org.id):
+                has_org_faved = True
 
         return render(request, 'course-detail.html', {'course': course,
                                                       'chapters_num': chapters_num,

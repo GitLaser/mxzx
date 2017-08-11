@@ -5,7 +5,7 @@ __date__ = '2017/5/3 16:01'
 from random import Random
 from users.models import EmailVerifyRecord
 from django.core.mail import send_mail
-from MXZX.settings import EMAIL_FROM
+from mxzx.settings import EMAIL_FROM
 
 
 def code_generator(code_length):
