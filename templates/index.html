@@ -188,11 +188,11 @@
 					<div class="right group_list">
 						    <div class="module1_2 box">
 							<div class="imgslide2">
-								<ul class="imgs">
+								<ul>
                                     {% for course in banner_courses %}
                                     <li>
                                         <a href="{% url 'course:course_detail' course.id%}">
-                                            <img width="470" height="300" src="{{ MEDIA_URL }}{{ course.image }}" />
+                                            <img style"width:472px;height:302px;"  src="{{ MEDIA_URL }}{{ course.image }}" />
                                         </a>
                                     </li>
                                     {% endfor %}
@@ -240,7 +240,7 @@
 						<ul>
                             {% for org in show_orgs %}
                                 <li class="{% if forloop.counter|divisibleby:'5' %}five{% endif %}">
-                                    <a href="org-detail-homepage.html">
+                                    <a href="{% url 'org:org_home' org.id %}">
                                         <div class="company">
                                             <img width="184" height="100" src="{{ MEDIA_URL }}{{ org.image }}"/>
                                             <div class="score">
