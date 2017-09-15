@@ -18,12 +18,12 @@ Including another URLconf
 
 from django.conf.urls import url,include
 import xadmin
-from users.views import LoginView,register_view,ActivateUserView,ForgetPwdView,RedirectToResetView,\
-    ResetPwdView,IndexView,LogOutView
+from users.views import LoginView, RegisterView, ActivateUserView, ForgetPwdView, RedirectToResetView,\
+    ResetPwdView, IndexView, LogOutView
 
 from django.views.static import serve
 from mxzx.settings import MEDIA_ROOT
-
+from courses.views import SearchView
 
 urlpatterns = [
 
@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^login/$',LoginView.as_view(), name='login'),
 
     # 注册页面
-    url(r'^register/$',register_view, name='register'),
+    url(r'^register/$',RegisterView.as_view(), name='register'),
 
     # 登出
     url(r'^logout/$',LogOutView.as_view(), name='logout'),
@@ -56,6 +56,9 @@ urlpatterns = [
 
     # 重置密码
     url(r'^resetpwd',ResetPwdView.as_view(), name='resetpwd'),
+
+    # 搜索结果
+    url(r'^search_result',SearchView.as_view(), name='search_result'),
 
     # 机构相关的url配置
     url(r'^org/',include('organization.urls', namespace='org')),

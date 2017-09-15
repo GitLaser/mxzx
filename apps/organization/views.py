@@ -18,12 +18,6 @@ class OrgView(View):
         all_cities = set(CityDict.objects.filter(org__isnull=False))
         all_orgs = Org.objects.all()
 
-        # 搜索功能
-        search_keywords = request.GET.get('keywords', '')
-        if search_keywords:
-            all_orgs = all_orgs.filter(
-                Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
-
         # 选出火热课程TOP3
         hot3 = all_orgs.order_by('-click_nums')[:3]
 
@@ -222,11 +216,6 @@ class TeacherListView(View):
     def get(self,request):
         all_teachers = Teacher.objects.all()
         hot3 = all_teachers.order_by('-click_nums')[:3]
-
-        # 搜索功能
-        search_keywords = request.GET.get('keywords', '')
-        if search_keywords:
-            all_teachers = all_teachers.filter(name__icontains=search_keywords)
 
         # 按点击量排名
         sort = request.GET.get('sort', '')

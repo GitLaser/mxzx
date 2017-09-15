@@ -1,4 +1,4 @@
-{% extends 'org_list_base.html' %}
+{% extends 'list_base.html' %}
 {% load staticfiles %}
 {% block  title %}机构列表 - 名校在线网{% endblock %}
 {% block custom_bread %}
@@ -32,10 +32,6 @@
 
                         <div class="clearfix">
                                  <h1>{{ org.name }}</h1>
-                                 <div class="pic fl">
-                                         <img src="{% static 'images/authentication.png' %}"/>
-                                         <img src="{% static 'images/gold.png' %}"/>
-                                 </div>
                         </div>
 
                         <ul class="cont">

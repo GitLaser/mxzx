@@ -26,8 +26,8 @@ def send_register_mail(email):
     email_record.send_type = 'register'
     email_record.save()
 
-    email_title = '名校在线注册激活链接'
-    email_body = '点击链接以激活:http://127.0.0.1:8000/activate/{0}'.format(code)
+    email_title = '名校在线：注册激活链接'
+    email_body = '点击链接以激活:http://www.zenofpy.cn/activate/{0}'.format(code)
 
     send_status = send_mail(email_title,email_body,EMAIL_FROM,[email])
     if send_status:
@@ -42,8 +42,8 @@ def send_forgetpwd_mail(email):
     email_record.send_type = 'forget'
     email_record.save()
 
-    email_title = '名校在线重置密码链接'
-    email_body = '点击链接以重置密码:http://127.0.0.1:8000/RedirectToReset/{0}'.format(code)
+    email_title = '名校在线：重置密码链接'
+    email_body = '点击链接以重置密码:http://www.zenofpy.cn/RedirectToReset/{0}'.format(code)
 
     send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
     if send_status:

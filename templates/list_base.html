@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+	<meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<title>{% block title %}名校列表 - 名校在线网{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/crumb.css' %}">
+    {% block custom_css%}{% endblock %}
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
+    {% block custom_js%}{% endblock %}
+
+</head>
+<body>
+<section class="headerwrap">
+    <header>
+		<div class=" header">
+      <div class="top">
+        <div class="wp">
+          <div class="fl"><p><b>欢迎来到名校在线网！</b></p></div>
+          <!--登录后跳转-->
+          {% if request.user.is_authenticated %}
+            <div class="personal">
+              <dl class="user fr">
+                <dd>{{ request.user.nick_name }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
+                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
+              </dl>
+              <div class="userdetail">
+                <dl>
+                  <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}" /></dt>
+                  <dd>
+                    <h2>{{ request.user.nick_name }}</h2>
+                    <p>{{ request.user.username }}</p>
+                  </dd>
+                </dl>
+                <div class="btn">
+                  <a class="personcenter fl" href="{% url 'user:info_center' %}">进入个人中心</a>
+                  <a class="fr" href="{% url 'logout' %}">退出</a>
+                </div>
+              </div>
+            </div>
+            <a href="{% url 'user:my_message' %}">
+              <div class="msg-num">
+                <span id="MsgNum">{{ request.user.get_unread_message_nums }}</span>
+              </div>
+            </a>
+          {% else %}
+            <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
+            <a style="color:white" class="fr loginbtn" href="{% url 'index' %}">登录</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="middle">
+        <div class="wp">
+        </div>
+      </div>
+
+
+      <nav>
+        <div class="nav">
+          <div class="wp">
+            <ul>
+              <li class="{% ifequal request.path '/' %}active{% endifequal %}"><a href="{% url 'index' %}">首页</a></li>
+              <li class="{% ifequal request.path|slice:'7' '/course' %}active{% endifequal %}">
+                <a href="{% url 'course:course_list' %}">
+                  课程
+                </a>
+              </li>
+              <li class="{% ifequal request.path|slice:'12' '/org/teacher' %}active{% endifequal %}">
+                <a href="{% url 'org:teacher_list' %}">名师</a>
+              </li>
+              <li class="{% ifequal request.path|slice:'9' '/org/list' %}active{% endifequal %}"><a href="{% url 'org:org_list' %}">名校</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    </div>
+    </header>
+</section>
+
+{#面包屑（导航）#}
+{% block custom_bread %}
+{% endblock %}
+{#网页主要内容#}
+{% block content %}
+<section>
+	<div class="wp butler_list_box list">
+	<div class='left'>
+		<div class="listoptions">
+			<ul>
+				<li>
+					<h2>所在地区</h2>
+					<div class="more">更多</div>
+					<div class="cont">
+                        {% block city %}
+                            <a href="?ct="><span class="active2">全部</span></a>
+
+                            <a href=""><span class="">上海市</span></a>
+                            <a href=""><span class="">广州市</span></a>
+
+
+                        {% endblock %}
+					</div>
+				</li>
+			</ul>
+		</div>
+		{% block org_cnt %}
+            <div class="all">共<span class="key">100</span>所大学</div>
+        {% endblock %}
+		<div class="butler_list company list">
+		<div class="layout">
+			<div class="head">
+				<ul class="tab_header">
+                    {% block order_by %}
+					<li class="active"><a href="?ct=&city=">全部</a> </li>
+					<li class=""><a href="?sort=students&ct=&city=">学习人数 &#8595;</a></li>
+					<li class=""><a href="?sort=courses&ct=&city=">课程数 &#8595;</a></li>
+                    {% endblock %}
+				</ul>
+			</div>
+
+            {% block org %}
+
+            {% endblock %}
+
+		</div>
+		 <div class="pageturn">
+            <ul class="pagelist">
+
+                {% if all_orgs.has_previous %}
+                    <li class="long"><a href="?{{ all_orgs.previous_page_number.querystring }}">前一页</a></li>
+                {% endif %}
+                {% for page in all_orgs.pages %}
+                    {% if page %}
+                        {% ifequal page all_orgs.number %}
+                            <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                        {% endifequal %}
+                    {% endif %}
+                {% endfor %}
+                {% if all_orgs.has_next %}
+                    <li class="long"><a href="?{{ all_orgs.next_page_number.querystring }}">下一页</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+		</div>
+	</div>
+
+	<div class="right companyright">
+			<img src="{% static 'images/xwll.jpg' %}" width="254px" height="144px" />
+		</div>
+        {% block rank %}
+		<div class="right companyrank layout">
+			<div class="head">名校排名</div>
+
+                <dl class="des">
+                    <dt class="num fl">1</dt>
+                    <dd>
+                        <a href="/company/2/"><h1>777</h1></a>
+                        <p>北京市</p>
+                    </dd>
+                </dl>
+
+        {% endblock %}
+		</div>
+        </div>
+</section>
+{% endblock %}
+
+<footer>
+		<div class="footer">
+            <p class="copyright">©2017&nbsp;&centerdot;&nbsp;名校在线网&nbsp;&centerdot;&nbsp;南京&nbsp;<a style="color: white" href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action">苏ICP备17049129号</a></p>
+        </div>
+</footer>
+
+
+<script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
+<script src="{% static 'js/deco-common.js' %}" type='text/javascript'></script>
+<script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js' %}"></script>
+<script src="{% static 'js/plugins/layer/layer.js' %}"></script>
+<script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}"  type="text/javascript"></script>
+<script src="{% static 'js/deco-common.js' %}"  type="text/javascript"></script>
+
+
+</body>
+</html>

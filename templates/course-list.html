@@ -1,4 +1,4 @@
-{% extends 'org_list_base.html' %}
+{% extends 'list_base.html' %}
 {% load staticfiles %}
 {% block  title %}公开课 - 名校在线网{% endblock %}
 {% block custom_bread %}
@@ -75,7 +75,7 @@
 			<div class="right layout">
 				<div class="head">热门课程推荐</div>
 				<div class="group_recommend">
-                {% for hot in hot3 %}
+                {% for hot in course_hot3 %}
                     <dl>
 						<dt>
 							<a target="_blank" href="{% url 'course:course_detail' hot.id %}">

@@ -35,11 +35,7 @@ class CustomBackend(ModelBackend):
 
 class LoginView(View):
     #登录
-    def get(self,request):
-        return render(request, 'login.html', {})
-
     def post(self,request):
-
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = request.POST.get('username', '')
@@ -53,13 +49,16 @@ class LoginView(View):
                     login(request, user)
                     # 登陆成功返回首页
                     # reverse('index') 等于'/'
-                    return HttpResponseRedirect(reverse('index'))
+                    return HttpResponseRedirect('/')
                 else:
-                    return render(request, 'login.html', {'msg': '用户尚未激活！', 'login_form': login_form})
+                    msg_status = 'danger'
+                    return render(request, 'index.html', {'msg': '用户尚未激活！', 'login_form': login_form, 'msg_status': msg_status})
             else:
-                return render(request, 'login.html', {'msg': '用户名或密码错误！', 'login_form': login_form})
+                msg_status = 'danger'
+                return render(request, 'index.html', {'msg': '用户名或密码错误！', 'login_form': login_form, 'msg_status': msg_status})
         else:
-            return render(request, 'login.html', {'msg': '用户名或密码错误！', 'login_form': login_form})
+            msg_status = 'danger'
+            return render(request, 'index.html', {'msg': '用户名或密码错误！', 'login_form': login_form, 'msg_status': msg_status})
 
 
 # 用户退出
@@ -69,35 +68,38 @@ class LogOutView(View):
         return HttpResponseRedirect('/')
 
 
-def register_view(request):
+class  RegisterView(View):
     # 用户注册
-    if request.POST:
+    def get(self,request):
+        register_form = RegisterForm()
+        return render(request,'index.html',{'i_want_register': 'register a account', 'register_form': register_form})
+
+    def post(self,request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
-            username = request.POST.get('email', '')
+            username = request.POST.get('username', '')
             password = request.POST.get('password', '')
             if UserProfile.objects.filter(email=username):
-                return render(request, 'register.html',{'msg':'用户已存在'})
+                msg_status = 'danger'
+                return render(request, 'index.html',{'msg':'用户已存在', 'i_want_register': 'register a account', 'msg_status':msg_status})
             else:
-                user_profile = UserProfile()
-                user_profile.username = username
-                user_profile.email = username
-                user_profile.password = make_password(password)
-                user_profile.is_active = False
-                user_profile.save()
+                new_user = UserProfile()
+                new_user.username = username
+                new_user.email = username
+                new_user.password = make_password(password)
+                new_user.is_active = False
+                new_user.save()
 
                 # 给用户发一条欢迎加入的消息
-                user_message = UserMessage(user=user_profile, message=u'欢迎加入本站！学习交流请+q：690216037')
+                user_message = UserMessage(user=new_user, message='欢迎加入本站！')
                 user_message.save()
 
                 # 发送注册邮件
                 send_register_mail(email=username)
-                return render(request, 'login.html')
+                msg_status = 'success'
+                return render(request, 'index.html', {'msg': '注册成功！请查收激活邮件！', 'msg_status': msg_status})
         else:
-            return render(request, 'register.html', {'register_form': register_form})
-    else:
-        register_form = RegisterForm()
-    return render(request, 'register.html')
+            return render(request, 'index.html', {'i_want_register': 'register a account'})
 
 
 class ActivateUserView(View):
@@ -112,25 +114,29 @@ class ActivateUserView(View):
                 user.save()
         else:
             return render(request, 'active_fail.html')
-        return render(request, 'login.html')
+        return render(request, 'index.html')
 
 
 class ForgetPwdView(View):
     # 点击登录页面的忘记密码，执行此处
     def get(self,request):
-        return render(request,'forget_pwd.html')
+        forget_pwd_form = ForgetPwdForm()
+        return render(request,'forget_pwd.html',{'forget_pwd_form':forget_pwd_form})
 
     def post(self,request):
         forget_pwd_form = ForgetPwdForm(request.POST)
         if forget_pwd_form.is_valid():
-            email = request.POST.get('email','')
+            email = request.POST.get('email', '')
             if UserProfile.objects.filter(email=email):
                 send_forgetpwd_mail(email)
-                return render(request, 'send_success.html',{})
+                msg_status = 'success'
+                return render(request, 'forget_pwd.html',{'msg':'邮件已发送，请注意查收！','msg_status':msg_status})
             else:
-                return render(request,'forget_pwd.html', {'msg': '用户不存在！'})
+                msg_status = 'danger'
+                return render(request,'forget_pwd.html', {'msg': '用户不存在！','forget_pwd_form':forget_pwd_form,'msg_status':msg_status})
         else:
-            return render(request, 'forget_pwd.html', {'msg': '输入有误！'})
+            msg_status = 'danger'
+            return render(request, 'forget_pwd.html', {'msg': '输入信息有误！','forget_pwd_form':forget_pwd_form,'msg_status':msg_status})
 
 
 class RedirectToResetView(View):
@@ -139,7 +145,7 @@ class RedirectToResetView(View):
         record = EmailVerifyRecord.objects.get(code=activate_code)
         email = record.email
         # 将邮箱号传到重置页面，以便设置的时候知道是哪个用户
-        return render(request,'password_reset.html',{'email':email})
+        return render(request, 'reset_pwd.html', {'email':email})
 
 
 class ResetPwdView(View):
@@ -153,11 +159,11 @@ class ResetPwdView(View):
                 user = UserProfile.objects.get(username=username)
                 user.password = make_password(password2)
                 user.save()
-                return render(request,'login.html',{'msg':'密码设置成功，请登录！'})
+                return render(request,'index.html',{'msg':'密码设置成功，请登录！'})
             else:
-                return render(request,'password_reset.html',{'msg':'两次输入的密码不相同！'})
+                return render(request, 'reset_pwd.html', {'msg': '两次输入的密码不相同！'})
         else:
-            return render(request,'password_reset.html',{'reset_password_form':reset_password_form})
+            return render(request, 'reset_pwd.html', {'reset_password_form':reset_password_form})
 
 
 class IndexView(View):
@@ -332,6 +338,5 @@ class MyMessageView(View):
         p = Paginator(all_messages,6, request=request)
 
         messages = p.page(page)
-
 
         return render(request,'usercenter-message.html',{'messages':messages})

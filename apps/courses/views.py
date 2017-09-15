@@ -10,17 +10,34 @@ from pure_pagination import Paginator, PageNotAnInteger
 from .models import Course,Video,CourseSource
 from operation.models import CourseComment,UserCourse,UserFavorite
 from utils.mixin_utils import LoginRequiredMixIn
+from organization.models import Teacher, Org
+
+
+class SearchView(View):
+    """搜索功能"""
+    def post(self,request):
+        all_courses = Course.objects.all()
+        all_teachers = Teacher.objects.all()
+        all_orgs = Org.objects.all()
+        course_hot3 = all_courses.order_by('-students')[:3]
+        search_type = request.POST.get('type', 'org')
+        search_keywords = request.POST.get('keywords', '')
+        if search_keywords:
+            if search_type == 'org':
+                all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
+                return render(request,'org-list.html',{'all_orgs':all_orgs})
+            if search_type == 'teacher':
+                all_teachers = all_teachers.filter(name__icontains=search_keywords)
+                return render(request,'teachers-list.html',{'all_teachers':all_teachers})
+            if search_type == 'course':
+                all_courses = all_courses.filter(Q(name__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
+                return render(request, 'course-list.html', {'all_courses': all_courses, 'course_hot3': course_hot3})
 
 
 class CourseListView(View):
     def get(self,request):
         all_courses = Course.objects.all()
-        hot3 = all_courses.order_by('-students')[:3]
-
-        # 搜索功能
-        search_keywords = request.GET.get('keywords','')
-        if search_keywords:
-            all_courses = all_courses.filter(Q(name__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
+        course_hot3 = all_courses.order_by('-students')[:3]
 
         # 按学生人数/点击量排名
         sort = request.GET.get('sort', '')
@@ -40,7 +57,7 @@ class CourseListView(View):
 
         courses = p.page(page)
 
-        return render(request,'course-list.html',{'all_courses':courses,'hot3':hot3})
+        return render(request,'course-list.html',{'all_courses':courses,'course_hot3':course_hot3})
 
 
 class CourseDetailView(View):

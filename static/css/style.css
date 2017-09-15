@@ -69,10 +69,14 @@ table.linehei50 td, table.linehei50 th {
 .errorpage .wp {
     width: 1000px;
 }
-.footer .code img{
-	width: 100px;
-	height: 100px;
+.footer .copyright{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: large;
+    color: white;
 }
+
 .errorpage .cont {
     width: 100%;
     height: 50%;
@@ -489,7 +493,7 @@ caption {
 }
 
 .header .top .userdetail .btn a:hover {
-    background: #4FB137;
+    background: #00c850;
 }
 
 .header .top .userdetail .btn a.fl {
@@ -539,11 +543,11 @@ caption {
     height: 30px;
     line-height: 30px;
     margin-top: 4px;
-    background: #616161;
     margin-left: 2px;
     text-align: center;
     float: left;
     cursor: pointer;
+
 }
 
 .registerbtn {
@@ -551,7 +555,6 @@ caption {
     height: 30px;
     line-height: 30px;
     margin-top: 4px;
-    background: #616161;
     margin-left: 2px;
     text-align: center;
     float: left;
@@ -559,11 +562,11 @@ caption {
 }
 
 .loginbtn:hover {
-    background: #4FB137;
+    text-decoration:underline;
 }
 
 .registerbtn:hover {
-    background: #4FB137;
+    text-decoration:underline;
 }
 
 .dialog-open,
@@ -849,7 +852,7 @@ textarea:focus {
 }
 
 .dialogbox .btn {
-    color: #4FB137;
+    color: #00c850;
     cursor: pointer;
 }
 
@@ -875,7 +878,7 @@ textarea:focus {
 }
 
 .dialogbox .button:hover {
-    background: #4FB137;
+    background: #00c850;
 }
 
 .registbox {
@@ -892,7 +895,7 @@ textarea:focus {
 }
 
 .registbox .tab .active {
-    color: #4FB137;
+    color: #00c850;
 }
 
 .registbox .tab div {
@@ -930,7 +933,7 @@ textarea:focus {
 }
 
 .registbox .box .sendcode:hover {
-    background: #4FB137;
+    background: #00c850;
 }
 
 .registbox .valcode {
@@ -941,7 +944,7 @@ textarea:focus {
     right: 0;
     top: -90px;
     background: #fff;
-    border: 1px solid #4FB137;
+    border: 1px solid #00c850;
     z-index: 100;
     overflow: hidden;
 }
@@ -992,7 +995,7 @@ textarea:focus {
 }
 
 .dialogbox .captcha {
-    background: #4FB137;
+    background: #00c850;
     position: absolute;
     right: 5px;
     top: 5px;
@@ -1300,7 +1303,7 @@ textarea:focus {
 
 .header .middle .wp {
     height: 100%;
-    background: url(../images/heartbg.png) repeat right 10px;
+    background: url(../images/heartbg.png) repeat center;
 }
 
 /*select*/
@@ -1495,7 +1498,8 @@ textarea:focus {
     left: 0;
     background: white;
     border-bottom: 1px solid #f6f6f6;
-    padding-top: 10px;
+    padding-top: 0px;
+    margin-top: 40px;
 }
 
 /*.banner .wp{overflow: hidden;position: absolute;top:10px;left:50%;margin-left:-600px;}*/
@@ -1625,7 +1629,7 @@ textarea:focus {
 
 .banner .fr .head {
     height: 78px;
-    background: #4fb137;
+    background: #00c850;
 }
 
 .banner .fr .center {
@@ -1788,11 +1792,12 @@ textarea:focus {
     height: auto;
     overflow: hidden;
     background: white;
+    margin-top: 20px;
 }
 
 .module h1 {
     font-size: 30px;
-    color: #333333;
+    color: darkslategray;
 }
 
 .module .eachmod {
@@ -2440,7 +2445,7 @@ textarea:focus {
 
 footer .footer {
     background: darkslategrey;
-    height: 300px;
+    height: 40px;
     padding: 0px;
     color: white;
 }
@@ -3105,7 +3110,7 @@ footer .footer .line {
 }
 
 .groupPurchase_detail .toppro .right .head {
-    background: #717171;
+    background: #F8F8F8;
     height: 70px;
     color: #fff;
     line-height: 30px;
@@ -3116,6 +3121,7 @@ footer .footer .line {
 .groupPurchase_detail .toppro .right .head h1 {
     color: #fff;
     padding-top: 10px;
+    color: black;
 }
 
 .groupPurchase_detail .toppro .right h2 {
@@ -3633,11 +3639,7 @@ footer .footer .line {
 
 .butler_detail_list .btn .btn1 {
     background: #717171 url(../images/btn3.png) no-repeat 15px center;
-}
-
-.butler_detail_list .btn .btn2 {
-    background: #3a3a3a url(../images/btn4.png) no-repeat 20px center;
-    position: relative;
+    margin-left: 50px;
 }
 
 .butler_detail_list .btn .btn2 a {
@@ -3927,7 +3929,7 @@ footer .footer .line {
 }
 
 .list.share_owner .keep_diary .btn {
-    background: #4fb137;
+    background: #00c850;
     height: 50px;
     line-height: 50px;
     text-align: center;
@@ -5021,7 +5023,7 @@ footer .footer .line {
 .companyright .head {
     text-align: center;
     color: #fff;
-    background: #4fb137;
+    background: #00c850;
     padding: 0;
     margin: 0;
     font-size: 24px;
@@ -5107,12 +5109,13 @@ footer .footer .line {
 }
 
 .companyheader h1 {
-    margin-top: 10px;
+    margin-top: 30px;
     margin-left: 0;
     padding: 0;
     margin-bottom: 10px;
     border: 0;
     width: 100%;
+    font-size: xx-large;
 }
 
 .companyheader .shead {
@@ -8167,7 +8170,7 @@ table .upload-btn {
 }
 
 .butler-company-box .head {
-    background: #717171;
+    background: #F8F8F8;
     height: 70px;
     color: #fff;
     line-height: 30px;
@@ -8178,6 +8181,7 @@ table .upload-btn {
 .butler-company-box .head h1 {
     color: #fff;
     padding-top: 10px;
+    color: black;
 }
 
 .butler-company-box h2 {

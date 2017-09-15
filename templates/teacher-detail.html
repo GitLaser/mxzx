@@ -29,12 +29,8 @@
                 <span class="fl btn1 collectionbtn" id="jsLeftBtn">
                   {% if has_teacher_faved %}已收藏{% else %}收藏{% endif %}
                 </span>
-                <span class="fr btn2 shareBtn bdsharebuttonbox">
-                  <span class="fl">分享</span>
-                  <a href="#" class="bds_more" data-cmd="more"></a>
-                </span>
               </div>
-              </dt>
+
               <dd>
                 <a>
                   <h1>{{ teacher.name }}<span class="key picbig">金牌讲师</span></h1>
@@ -77,11 +73,6 @@
                 {% endfor %}
               </div>
             </div>
-            <!--<div class="pageturn">-->
-            <!--<ul class="pagelist">-->
-            <!--<li class="active"><a href="?page=1">1</a></li>-->
-            <!--</ul>-->
-            <!--</div>-->
           </div>
         </div>
       </div>
@@ -90,7 +81,6 @@
           <div class="right butler-company-box">
             <div class="head">
               <h1>{{ teacher.org.name }}</h1>
-              <p>知名高校，权威教学</p>
             </div>
             <div class="pic">
               <a href="{% url 'org:org_home' teacher.org.id %}">
@@ -150,7 +140,8 @@
             success: function (data) {
                 if (data.status == 'fail') {
                     if (data.msg == '用户未登录') {
-                        window.location.href = "{% url 'login' %}";
+                        alert('请先登录！');
+                        window.location.href = "{% url 'index' %}";
                     } else {
                         current_elem.text(data.msg)
                     }

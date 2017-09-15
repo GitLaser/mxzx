@@ -19,8 +19,8 @@ class BaseSetting(object):
 
 
 class GlobalSetting(object):
-    site_title = '商业帝国'
-    site_footer = '子昂'
+    site_title = '名校在线'
+    site_footer = '2017 · 名校在线网 · 南京   苏ICP备17049129号'
     menu_style = 'accordion'
     globe_models_icon = {UserProfile: 'Banner-icon'}
 

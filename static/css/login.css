@@ -14,9 +14,7 @@ a:hover{
 .fff-box{
     background:#fff;
 }
-.bg-box{
-    background:url(../images/waterflash.jpg) no-repeat center center;
-}
+
 .header-box{
     width:1190px;
     height:38px;
@@ -444,4 +442,4 @@ a:hover{
 .dialogbox .box span{color:#7c7c7c;border-right:1px solid #ccc;width:80px;height:20px;line-height:20px;margin-top:12px;text-align:center;display: block;}
 .dialogbox .button{width:100%;height:45px;line-height:45px;background:#5dbf45;color:#fff;margin:0;border:none; cursor: pointer;position: relative;}
 .dialogbox .button input{background: none;border:none;width:100%;color:#fff;cursor: pointer;line-height: 45px;}
-.dialogbox .button:hover{background:#4FB137;}
+.dialogbox .button:hover{background:#00c850;}
