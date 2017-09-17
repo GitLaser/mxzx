@@ -44,15 +44,11 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
 
             if user is not None:
-                if user.is_active:
-                    # 登录
-                    login(request, user)
-                    # 登陆成功返回首页
-                    # reverse('index') 等于'/'
-                    return HttpResponseRedirect('/')
-                else:
-                    msg_status = 'danger'
-                    return render(request, 'index.html', {'msg': '用户尚未激活！', 'login_form': login_form, 'msg_status': msg_status})
+                # 登录
+                login(request, user)
+                # 登陆成功返回首页
+                # reverse('index') 等于'/'
+                return HttpResponseRedirect('/')
             else:
                 msg_status = 'danger'
                 return render(request, 'index.html', {'msg': '用户名或密码错误！', 'login_form': login_form, 'msg_status': msg_status})
@@ -81,13 +77,17 @@ class  RegisterView(View):
             password = request.POST.get('password', '')
             if UserProfile.objects.filter(email=username):
                 msg_status = 'danger'
-                return render(request, 'index.html',{'msg':'用户已存在', 'i_want_register': 'register a account', 'msg_status':msg_status})
+                register_form=RegisterForm()
+                return render(request, 'index.html',{'msg':'用户已存在！',
+                                                     'i_want_register': 'register a account',
+                                                     'msg_status':msg_status,
+                                                     'register_form':register_form})
             else:
                 new_user = UserProfile()
                 new_user.username = username
                 new_user.email = username
                 new_user.password = make_password(password)
-                new_user.is_active = False
+                new_user.is_active = True
                 new_user.save()
 
                 # 给用户发一条欢迎加入的消息
@@ -97,24 +97,14 @@ class  RegisterView(View):
                 # 发送注册邮件
                 send_register_mail(email=username)
                 msg_status = 'success'
-                return render(request, 'index.html', {'msg': '注册成功！请查收激活邮件！', 'msg_status': msg_status})
+                return render(request, 'index.html', {'msg': '注册成功！请登录！', 'msg_status': msg_status})
         else:
-            return render(request, 'index.html', {'i_want_register': 'register a account'})
-
-
-class ActivateUserView(View):
-    # 激活用户
-    def get(self,request,activate_code):
-        all_records = EmailVerifyRecord.objects.filter(code=activate_code)
-        if all_records:
-            for record in all_records:
-                email = record.email
-                user = UserProfile.objects.get(email=email)
-                user.is_active = True
-                user.save()
-        else:
-            return render(request, 'active_fail.html')
-        return render(request, 'index.html')
+            msg_status = 'danger'
+            register_form = RegisterForm()
+            return render(request, 'index.html', {'msg':'信息填写有误!',
+                                                  'i_want_register': 'register a account',
+                                                  'msg_status':msg_status,
+                                                  'register_form':register_form})
 
 
 class ForgetPwdView(View):

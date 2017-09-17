@@ -18,11 +18,11 @@ Including another URLconf
 
 from django.conf.urls import url,include
 import xadmin
-from users.views import LoginView, RegisterView, ActivateUserView, ForgetPwdView, RedirectToResetView,\
+from users.views import LoginView, RegisterView, ForgetPwdView, RedirectToResetView,\
     ResetPwdView, IndexView, LogOutView
 
 from django.views.static import serve
-from mxzx.settings import MEDIA_ROOT
+from mxzx.settings import MEDIA_ROOT,STATIC_ROOT
 from courses.views import SearchView
 
 urlpatterns = [
@@ -44,9 +44,6 @@ urlpatterns = [
 
     # 校验码
     url(r'^captcha/', include('captcha.urls')),
-
-    # 激活用户
-    url(r'^activate/(?P<activate_code>.*)/$', ActivateUserView.as_view(), name='ActivateUser'),
 
     # 忘记密码
     url(r'^forget_pwd/$',ForgetPwdView.as_view(), name='forget_pwd'),
@@ -73,5 +70,5 @@ urlpatterns = [
     url(r'^media/(?P<path>.*)', serve, {'document_root':MEDIA_ROOT}),
 
     # 当debug=false
-    # url(r'^static/(?P<path>.*)', serve, {'document_root': STATIC_ROOT}),
+    url(r'^static/(?P<path>.*)', serve, {'document_root': STATIC_ROOT}),
 ]

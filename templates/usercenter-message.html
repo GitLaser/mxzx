@@ -39,7 +39,7 @@
 
                     <div class="messages">
                         <div class="fr">
-                            <div class="top"><span class="fl time">{{ message.add_time }}</span><span class="fr btn foldbtn"></span></div>
+                            <div class="top"><span class="fl time">{{ message.add_time|date:"Y-m-d H:i:s" }}</span><span class="fr btn foldbtn"></span></div>
                             <p>
                                 {{ message.message }}
                             </p>

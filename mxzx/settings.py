@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 SECRET_KEY = 'xkdq$o_%20-^wz!63g*%jqwk8df#nrk9$enn9p0l$$nf3ux+i&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -97,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mxzx',
         'USER':'root',
-        'PASSWORD':'ROOT',
+        'PASSWORD':'root',
         'HOST':'localhost'
     }
 }
@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'zh-Hans'
+iLANGUAGE_CODE = 'zh-Hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -140,15 +140,17 @@ USE_TZ = False
 
 # 静态文件
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
+#STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 # 发送邮件设置
-EMAIL_HOST = "smtp.qq.com"
-EMAIL_PORT = 25
-EMAIL_HOST_USER = '690216037@qq.com'
-EMAIL_HOST_PASSWORD = 'slchmgnbgrczbeji'
-EMAIL_USE_TLS = True
-EMAIL_FROM = '690216037@qq.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.exmail.qq.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'cza@zenofpy.cn'
+EMAIL_HOST_PASSWORD = 'Gggg6666'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_FROM = '名校在线 <cza@zenofpy.cn>'
 
 # 媒体文件目录
 MEDIA_URL = '/media/'
@@ -157,7 +159,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # 当运行 python manage.py collectstatic 的时候
 # STATIC_ROOT 文件夹 是用来将所有 STATICFILES_DIRS 中所有文件夹中的文件，以及各 app 中 static 中的文件都复制过来
 # 把这些文件放到一起是为了用 apache/nginx 等部署的时候更方便
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # 分页设置
 PAGINATION_SETTINGS = {

@@ -53,6 +53,9 @@
                 <form class="navbar-form navbar-right" method="post" action="{% url 'register' %}">
                     {% csrf_token %}
                     <div class="form-group">
+			{% if msg %}
+                        <button class="btn btn-{{ msg_status }}">{{ msg }}</button>
+                    	{% endif %}
                         <label style="color: white">邮箱</label>
                         <input class="form-control" name="username" type="email" placeholder="请使用邮箱注册">
                         <label style="color: white">密码</label>
@@ -68,10 +71,10 @@
                 {% csrf_token %}
                 <div class="form-group">
                     {% if msg %}
-                        <button class="btn btn-{{ msg_status }}">{{ register_msg }}</button>
+                        <button class="btn btn-{{ msg_status }}">{{ msg }}</button>
                     {% endif %}
                     <label style="color: white">邮箱</label>
-                    <input class="form-control" name="username" type="text">
+                    <input class="form-control" name="username" type="email">
                     <label style="color: white">密码</label>
                     <input class="form-control" name="password" type="password">
                     <button type="submit" class="btn btn-primary">登录</button>
