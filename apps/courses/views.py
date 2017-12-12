@@ -99,8 +99,11 @@ class CourseDetailView(View):
                                                       })
 
 
-class CourseCommentView(LoginRequiredMixIn,View):
+class CourseCommentView(View):
     def get(self,request,course_id):
+        if not request.user.is_authenticated():
+            return render(request,'index.html',{'msg':'请先登录！','msg_status':'danger'})
+
         # 传入course_id，确定是哪门课
         this_course = Course.objects.get(pk=int(course_id))
 
@@ -132,8 +135,10 @@ class CourseCommentView(LoginRequiredMixIn,View):
                                                      'course_teacher':course_teacher})
 
 
-class CourseVideoView(LoginRequiredMixIn,View):
+class CourseVideoView(View):
     def get(self, request, course_id):
+        if not request.user.is_authenticated():
+            return render(request,'index.html',{'msg':'请先登录！','msg_status':'danger'})
         # 传入course_id，确定是哪门课
         this_course = Course.objects.get(pk=int(course_id))
         # 判断用户是否参加了这门课
@@ -183,7 +188,7 @@ class AddCommentView(View):
     def post(self,request):
         # 判断用户登录状态
         if not request.user.is_authenticated():
-            return HttpResponse('{"status":"fail","msg":"用户未登录！"}',content_type='application/json')
+            return render(request,'index.html',{'msg':'请先登录！','msg_status':'danger'})
 
         course_id = request.POST.get('course_id',0)
         comments = request.POST.get('comments','')

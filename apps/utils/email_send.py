@@ -26,8 +26,8 @@ def send_register_mail(email):
     email_record.send_type = 'register'
     email_record.save()
 
-    email_title = '名校在线：注册激活链接'
-    email_body = '点击链接以激活:http://www.zenofpy.cn/activate/{0}'.format(code)
+    email_title = '名校在线：欢迎注册本站！'
+    email_body = '欢迎注册本站！'
 
     send_status = send_mail(email_title,email_body,EMAIL_FROM,[email])
     if send_status:

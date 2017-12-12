@@ -138,8 +138,8 @@
       success: function (data) {
         if (data.status == 'fail') {
           if (data.msg == '用户未登录') {
-            alert('用户未登录')
-            window.location.href = "index.html";
+            alert('请先登录')
+            window.location.href = {% url 'index' %};
           } else {
             alert(data.msg)
           }
@@ -159,22 +159,7 @@
     add_fav($(this), {{ course_org.id }}, 2);
   });
 
-  $(function () {
-    var $precision = $('.precision'),
-      score = $precision.attr('data-star-scope'),
-      option = {
-        half: true,
-        path: '{% static 'images/' %}',
-        precision: true,
-        size: 24,
-        starOff: 'g_star.png',
-        starOn: 'r_star.png',
-        starHalf: 'h_star.png',
-        hints: ['极差', '差', '一般', '好评', '非常满意'],
-        noRatedMsg: '暂时还未获得评价！',
-        readOnly: true,
-        score: score
-      };
+ 
     $precision.raty(option);
 
     $('.jsFavBtn').on('click', function () {
