@@ -25,13 +25,42 @@ class SearchView(View):
         if search_keywords:
             if search_type == 'org':
                 all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
-                return render(request,'org-list.html',{'all_orgs':all_orgs})
+                cnt = all_orgs.count()
+
+                try:
+                    page = request.GET.get('page', 1)
+                except PageNotAnInteger:
+                    page = 1
+
+                p = Paginator(all_orgs, 3, request=request)
+
+                orgs = p.page(page)
+                return render(request,'org-list.html',{'all_orgs':orgs,'cnt':cnt})
+               
             if search_type == 'teacher':
                 all_teachers = all_teachers.filter(name__icontains=search_keywords)
-                return render(request,'teachers-list.html',{'all_teachers':all_teachers})
+                cnt = all_teachers.count()
+                try:
+                    page = request.GET.get('page', 1)
+                except PageNotAnInteger:
+                    page = 1
+
+                p = Paginator(all_teachers, 6, request=request)
+
+                teachers = p.page(page)
+                return render(request,'teachers-list.html',{'all_teachers':teachers,'teachers_num':cnt})
+                
             if search_type == 'course':
                 all_courses = all_courses.filter(Q(name__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
-                return render(request, 'course-list.html', {'all_courses': all_courses, 'course_hot3': course_hot3})
+                try:
+                    page = request.GET.get('page', 1)
+                except PageNotAnInteger:
+                    page = 1
+
+                p = Paginator(all_courses, 6, request=request)
+
+                courses = p.page(page)
+                return render(request, 'course-list.html', {'all_courses': courses})
 
 
 class CourseListView(View):
