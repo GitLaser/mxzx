@@ -5,29 +5,20 @@
 {% block  title %}{{ this_video.name }} - 名校在线网{% endblock %}
 
 {% block custom_bread %}
-<div class="breadcrumb flat">
-	<a href="{% url 'index' %}">首页</a>
-	<a href="{% url 'org:teacher_list' %}">公开课</a>
-	<a href="{% url 'course:course_detail' this_course.id %}">课程详情</a>
-    <a href="{% url 'course:course_video' this_course.id %}">课程视频</a>
-    <a href="#" class="active">{{ this_video.name }}</a>
-</div>
+<section>
+    <div class="wp">
+        <ul  class="crumbs">
+            <li><a href="#">返回：</a></li>
+            <li><a href="{% url 'course:course_detail' this_course.id%}">课程介绍&nbsp;-&nbsp;</a></li>
+            <li><a href="{% url 'course:course_video' this_course.id %}">课程详情</a></li>
+        </ul>
+    </div>
+</section>
 {% endblock %}
 
 {% block content %}
-    <div id="main">
-        <div style="
-        ;width:1200px;
-        height: 700px;
-        margin-left: 350px;
-        overflow:hidden;">
-            <video id="example_video_1" class="video-js vjs-default-skin" width="1200" height="700"
-                   controls="controls"
-                    data-setup="{}">
-                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-            </video>
-        </div>
-    </div>
+<video style="margin-left:200px"  src="http://vjs.zencdn.net/v/oceans.mp4" controls autoplay >example video</video>
+
     <div class="course-info-main clearfix w has-progress">
 
         <div class="info-bar clearfix">
@@ -151,15 +142,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/aui.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/mooc.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/common-less.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/video-js.css' %}">
-    <style>
-    .video-js .vjs-big-play-button{
-        top:50%;
-        left:50%;
-    }
-    </style>
 {% endblock %}
 {% block custom_js %}
-     <script src="{% static 'js/video.min.js' %}" type="text/javascript"></script>
+
 
 {% endblock %}
