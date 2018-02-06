@@ -28,7 +28,7 @@
             <div class="personal">
               <dl class="user fr">
                 <dd>{{ request.user.nick_name }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
-                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
+                <dt><a href="{% url 'user:info_center' %}"><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></a></dt>
               </dl>
               <div class="userdetail">
                 <dl>

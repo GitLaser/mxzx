@@ -1,22 +1,22 @@
 {% extends 'list_base.html' %}
 {% load staticfiles %}
 {% block  title %}公开课评论页面 - 名校在线网{% endblock %}
-{% block custom_bread %}
-<div class="breadcrumb flat">
-	<a href="{% url 'index' %}">首页</a>
-	<a href="{% url 'course:course_list' %}">公开课</a>
-    <a href="{% url 'course:course_detail' this_course.id %}">课程详情</a>
-	<a href="#" class="active">课程评论</a>
-</div>
-{% endblock %}
 {% block content %}
  <div id="main">
     <div class="course-infos">
         <div class="w pr">
             <div style="height: 15px" class="path">
             </div>
+	    <style type="text/css">
+                #course_name{
+                    color: cadetblue;
+                }
+                #course_name:hover{
+                    color: lightcyan;
+                }
+            </style>
             <div class="hd">
-                <h2 class="l">&nbsp;&nbsp;{{ this_course.name }}</h2>
+                <h2 class="l">&nbsp;&nbsp;<a id="course_name" href="{% url 'course:course_detail' this_course.id %}">{{ this_course.name }}</a></h2>
             </div>
             <div class="statics clearfix">
                 <div class="static-item ">

@@ -1,19 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}讲师详情 - 名校在线网{% endblock %}
-
-{% block custom_bread %}
-<section>
-    <div class="wp">
-        <ul  class="crumbs">
-            <li><a href="{% url 'index' %}">首页</a>></li>
-            <li><a href="{% url 'org:teacher_list' %}">名师列表</a>></li>
-            <li>讲师详情</li>
-        </ul>
-    </div>
-</section>
-{% endblock %}
-
 {% block custom_content %}
 <section>
     <div class="wp butler-detail-box butler-diaryd-box clearfix">

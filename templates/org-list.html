@@ -1,16 +1,6 @@
 {% extends 'list_base.html' %}
 {% load staticfiles %}
 {% block  title %}机构列表 - 名校在线网{% endblock %}
-{% block custom_bread %}
-<section>
-    <div class="wp">
-        <ul  class="crumbs">
-            <li><a href="{% url 'index' %}">首页</a>></li>
-            <li>名校列表</li>
-        </ul>
-    </div>
-</section>
-{% endblock %}
 
 {% block city %}
     <a href="?ct={{ category }}"><span {% ifequal city_id '' %}class="active2"{% endifequal %}>全部</span></a>

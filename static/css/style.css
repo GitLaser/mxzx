@@ -2644,6 +2644,7 @@ footer .footer .line {
 }
 
 .list {
+    top:25px;
     height: auto;
     margin-top: 40px;
     margin-bottom: 40px;
@@ -3284,10 +3285,9 @@ footer .footer .line {
 
 .butler_list_box .all {
     width: 100%;
-    height: 30px;
+    height: 5px;
     line-height: 30px;
     text-align: right;
-    margin-top: 20px;
     font-size: 16px;
     color: #838383;
 }

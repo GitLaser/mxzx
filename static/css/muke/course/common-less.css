@@ -45,6 +45,7 @@ i {
     padding-top: 0;
 }
 .course-infos {
+    top:25px;
     position: relative;
     background-color: #fff;
 }
