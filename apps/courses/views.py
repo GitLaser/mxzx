@@ -220,7 +220,7 @@ class AddCommentView(View):
             return render(request,'index.html',{'msg':'请先登录！','msg_status':'danger'})
 
         course_id = request.POST.get('course_id',0)
-        comments = request.POST.get('comments','')
+        comments = request.POST.get('text','')
         if course_id > 0 and comments:
             course_comments = CourseComment()
             course = Course.objects.get(id=int(course_id))

@@ -7,7 +7,7 @@
         <div class="w pr">
             <div style="height: 15px" class="path">
             </div>
-	    <style type="text/css">
+            <style type="text/css">
                 #course_name{
                     color: cadetblue;
                 }
@@ -52,9 +52,9 @@
                     <!--发布评论-->
                     <div id="js-pub-container" class="issques clearfix js-form">
                         <div class="wgt-ipt-wrap pub-editor-wrap " id="js-pl-input-fake">
-                            <textarea id="js-pl-textarea" class="" placeholder="吐槽还是表扬？" ></textarea>
+                            <textarea id="comment_text"></textarea>
                         </div>
-                        <input type="button" id="js-pl-submit" class="pub-btn" data-cid="452" value="发表评论">
+                        <input type="button" id="comment_btn" class="pub-btn" data-cid="452" value="发表评论">
                         <p class="global-errortip js-global-error"></p>
                     </div>
                     <div id="course_note">
@@ -129,17 +129,6 @@
                                                 <span class="name autowrap">{{ recommend_course.course.name }}</span>
                                             </a>
                                         </li>
-
-                                    </ul>
-                                </div>
-                                <div class="cp-tab-pannel js-comp-tab-pannel" data-pannel="plan">
-                                    <ul class="other-list">
-                                        <li class="curr">
-                                            <a href="/course/programdetail/pid/31?src=sug" target="_blank">
-                                                <img src="http://img.mukewang.com/56551e6700018b0c09600720-240-135.jpg" alt="Java工程师">
-                                                <span class="name autowrap">Java工程师</span>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -147,13 +136,27 @@
                 </div>
             </div>
         </div>
-            <div class="clear"></div>
+
         </div>
     </div>
 </div>
-    <script type="text/javascript">
-
-
+<script type="text/javascript">
+      // comment_text,comment_btn
+    $(document).ready(function(){
+        $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}' }
+                });
+      $("#comment_btn").click(function(){
+        var text= $("#comment_text").val();
+        if(text == ""){
+            alert("评论不能为空");
+            return
+        }
+        $.post("{% url 'course:add_comment' %}",{'text':text,'course_id':{{this_course.id}} }, function(ret){
+            window.location.reload();
+        })
+      });
+    });
 </script>
 
 {% endblock %}
