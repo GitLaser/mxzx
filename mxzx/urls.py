@@ -28,7 +28,7 @@ from courses.views import SearchView
 urlpatterns = [
 
     # 后台管理
-    url(r'^xadmin/', xadmin.site.urls),
+    url(r'^admin/', xadmin.site.urls),
 
     # 首页
     url(r'^$',IndexView.as_view(), name='index'),

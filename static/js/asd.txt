@@ -97,12 +97,11 @@ $(function () {
         } else if (data.password2) {
           Dml.fun.showValidateError($("#repwd"), data.password2);
         } else if (data.status == "success") {
-          //Dml.fun.showTipsDialog({
-          //  title: '提交成功',
-          //  h2: '修改密码成功，请重新登录!',
-          //});
-          window.alert("密码修改成功，请重新登录！");
-          window.location.href="http://www.zenofpy.cn";
+          Dml.fun.showTipsDialog({
+            title: '提交成功',
+            h2: '修改密码成功，请重新登录!',
+          });
+          Dml.fun.winReload();
         } else if (data.msg) {
           Dml.fun.showValidateError($("#pwd"), data.msg);
           Dml.fun.showValidateError($("#repwd"), data.msg);

@@ -67,15 +67,15 @@
           <div class="wp">
             <ul>
               <li class="{% ifequal request.path '/' %}active{% endifequal %}"><a href="{% url 'index' %}">首页</a></li>
-              <li class="{% ifequal request.path|slice:'7' '/course' %}active{% endifequal %}">
-                <a href="{% url 'course:course_list' %}">
-                  课程
-                </a>
+              <li class="{% ifequal request.path|slice:'9' '/org/list' %}active{% endifequal %}">
+                <a href="{% url 'org:org_list' %}">名校</a>
               </li>
               <li class="{% ifequal request.path|slice:'12' '/org/teacher' %}active{% endifequal %}">
                 <a href="{% url 'org:teacher_list' %}">名师</a>
               </li>
-              <li class="{% ifequal request.path|slice:'9' '/org/list' %}active{% endifequal %}"><a href="{% url 'org:org_list' %}">名校</a></li>
+              <li class="{% ifequal request.path|slice:'7' '/course' %}active{% endifequal %}">
+                <a href="{% url 'course:course_list' %}"> 课程</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -97,7 +97,7 @@
 			<ul>
 				<li>
 					<h2>所在地区</h2>
-					<div class="more">更多</div>
+					
 					<div class="cont">
                         {% block city %}
                             <a href="?ct="><span class="active2">全部</span></a>
